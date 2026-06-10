@@ -1,0 +1,1 @@
+Server for a simple Note App site, for demonstrating how to connect an Express server to a NoSQL database using MongoDB Atlas and be abble to access remotely.
