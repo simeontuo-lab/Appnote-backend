@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "../NoteApp-frontend")))
 const port = process.env.PORT || 3000;
 
-// Logging utility
+
 function log(message) {
     const timestamp = new Date().toISOString();
     const logMessage = `[${timestamp}] ${message}\n`;
@@ -18,7 +18,7 @@ function log(message) {
     fs.appendFileSync(path.join(__dirname, 'debug.log'), logMessage);
 }
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -30,14 +30,14 @@ const client = new MongoClient(uri, {
 
 
 let db
-// Connect to the database and store the reference in a variable for use in route handlers
+
 async function connectDB() {
     await client.connect()
     db = client.db(process.env.MONGO_DB_NAME)
     console.log("Connected to MongoDB")
 }
 
-// Start the server after connecting to the database
+
 async function startServer() {
     try {
         await connectDB().catch(console.dir)
@@ -48,7 +48,7 @@ async function startServer() {
         console.log("Failed to connect.", error)
     }
 }
-// CORS middleware to allow requests from the frontend
+
 app.use((req, res, next) => {
     res.set(`Access-Control-Allow-Origin`, `*`)
 
@@ -75,7 +75,7 @@ app.get("/posts", async (req, res) => {
             return res.status(400).json({ message: "Username query parameter is required." })
         }
         
-        // Debug: Get all posts to see what's in database
+        
         const allPosts = await db.collection("posts").find({}).toArray()
         log(`📊 Total posts in database: ${allPosts.length}`)
         allPosts.forEach((post) => {
